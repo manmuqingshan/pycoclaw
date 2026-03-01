@@ -1,0 +1,1011 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siTelegram, siGithub } from 'simple-icons';
+const siIcon = (icon: any) => icon.path;
+---
+
+<Layout title="PycoClaw — OpenClaw for Embedded">
+  <!-- RP2350 Banner -->
+  <a href="#" class="rp2350-banner" aria-label="Raspberry Pi Pico RP2350 support coming soon">
+    <span class="rp2350-line1">RP2350</span>
+    <span class="rp2350-line2">Coming Soon!</span>
+  </a>
+
+  <div class="stars"></div>
+  <div class="nebula"></div>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="chip-icon" aria-hidden="true">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Chip body -->
+          <rect x="30" y="30" width="60" height="60" rx="8" fill="url(#chip-gradient)" class="chip-body"/>
+          <!-- CPU die -->
+          <rect x="42" y="42" width="36" height="36" rx="4" fill="var(--bg-deep)" opacity="0.6"/>
+          <!-- Circuit trace pattern -->
+          <path d="M50 50 L50 58 L58 58" stroke="var(--accent-bright)" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+          <path d="M70 50 L70 58 L62 58" stroke="var(--cyan-bright)" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+          <path d="M50 70 L50 62 L58 62" stroke="var(--cyan-bright)" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+          <path d="M70 70 L70 62 L62 62" stroke="var(--accent-bright)" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+          <!-- Center dot -->
+          <circle cx="60" cy="60" r="3" fill="var(--accent-bright)" class="chip-core"/>
+          <!-- Pins - top -->
+          <rect x="40" y="20" width="3" height="14" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="50" y="20" width="3" height="14" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="60" y="20" width="3" height="14" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="70" y="20" width="3" height="14" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <!-- Pins - bottom -->
+          <rect x="40" y="86" width="3" height="14" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="50" y="86" width="3" height="14" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="60" y="86" width="3" height="14" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="70" y="86" width="3" height="14" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <!-- Pins - left -->
+          <rect x="16" y="40" width="14" height="3" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="16" y="50" width="14" height="3" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="16" y="60" width="14" height="3" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="16" y="70" width="14" height="3" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <!-- Pins - right -->
+          <rect x="90" y="40" width="14" height="3" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="90" y="50" width="14" height="3" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="90" y="60" width="14" height="3" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <rect x="90" y="70" width="14" height="3" rx="1.5" fill="var(--accent-bright)" opacity="0.7"/>
+          <defs>
+            <linearGradient id="chip-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="var(--logo-gradient-start)"/>
+              <stop offset="100%" stop-color="var(--logo-gradient-end)"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <h1 class="title">
+        <span class="title-main">PycoClaw</span>
+      </h1>
+
+      <p class="tagline">OpenClaw for embedded.</p>
+
+      <p class="description">
+        Full AI agent on a $5 microcontroller. <br/> MicroPython-powered — just flash and go.<br/>
+      </p>
+
+      <div class="hero-ctas">
+        <a href="/install" class="hero-btn hero-btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Install Now
+        </a>
+        <a href="https://github.com/jetpax/pycoclaw" class="hero-btn hero-btn-secondary" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <!-- Hero HUD Dashboard -->
+      <div class="hero-hud">
+        <iframe src="/hud.html" title="PFC Agent HUD — live telemetry dashboard" loading="lazy"></iframe>
+      </div>
+    </header>
+
+    <!-- What It Does -->
+    <section class="features">
+      <h2 class="section-title">
+        <span class="accent-marker">⟩</span> What It Does
+      </h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3 class="feature-title">One-Click Flash</h3>
+          <p class="feature-desc">Flash your ESP32 from the browser. No toolchain, no terminal, no ESP-IDF. Just click and go.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3 class="feature-title">Full Agent Loop</h3>
+          <p class="feature-desc">Complete OpenClaw reasoning engine: recursive tool calls, context compaction, dual-loop architecture. Full parity.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M20 15h2"/><path d="M9 2v2"/><path d="M9 20v2"/><path d="M2 9h2"/><path d="M20 9h2"/></svg>
+          </div>
+          <h3 class="feature-title">Hardware Control</h3>
+          <p class="feature-desc">Control LEDs, displays, sensors directly. LVGL touchscreen UI. GPIO, CAN, I2C — the agent controls the board.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3 class="feature-title">Multi-Channel Chat</h3>
+          <p class="feature-desc">Talk via Telegram, Scripto Studio, or any future channel. Your agent is always listening.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M20 12a8 8 0 0 0-8-8v8h8z" opacity="0.5"/></svg>
+          </div>
+          <h3 class="feature-title">Persistent Memory</h3>
+          <p class="feature-desc">Hybrid TF-IDF + vector search. Remembers across reboots. SD card backed. Your agent knows you.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3 class="feature-title">ScriptOs Skills</h3>
+          <p class="feature-desc">Install and run skills from <a href="https://scriptohub.ai" target="_blank" rel="noopener">ScriptoHub</a>. The marketplace for embedded AI. The agent writes its own too.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Compares -->
+    <section class="comparison">
+      <h2 class="section-title">
+        <span class="accent-marker">⟩</span> How It Compares
+      </h2>
+      <p class="comparison-intro">PycoClaw brings full OpenClaw agent parity to embedded hardware — something no other project achieves.</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="highlight-col">PycoClaw</th>
+              <th>OpenClaw</th>
+              <th>Nanobot</th>
+              <th>MimiClaw</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="feature-name">Runtime</td>
+              <td class="highlight-col"><strong>MicroPython</strong></td>
+              <td>Node.js (server)</td>
+              <td>Python (server)</td>
+              <td>C (ESP32)</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Install</td>
+              <td class="highlight-col"><strong>One-click web flash</strong></td>
+              <td><code>npm i -g</code></td>
+              <td><code>pip install</code></td>
+              <td>ESP-IDF build</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Agent Loop</td>
+              <td class="highlight-col"><span class="check">✓</span> Full dual-loop</td>
+              <td><span class="check">✓</span> Full dual-loop</td>
+              <td><span class="check">✓</span> Basic</td>
+              <td><span class="check">✓</span> Basic ReAct</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Tool Calling</td>
+              <td class="highlight-col"><span class="check">✓</span> Recursive</td>
+              <td><span class="check">✓</span> Recursive</td>
+              <td><span class="check">✓</span> Yes</td>
+              <td><span class="check">✓</span> 5 tools</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Memory</td>
+              <td class="highlight-col"><span class="check">✓</span> Hybrid TF-IDF + Vector</td>
+              <td><span class="check">✓</span> Vector DB</td>
+              <td>Basic file</td>
+              <td>MEMORY.md only</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Context Compaction</td>
+              <td class="highlight-col"><span class="check">✓</span> LLM summarization</td>
+              <td><span class="check">✓</span> LLM summarization</td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td class="feature-name">Session History</td>
+              <td class="highlight-col"><span class="check">✓</span> JSONL tree</td>
+              <td><span class="check">✓</span> JSONL tree</td>
+              <td>Basic</td>
+              <td>JSONL</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Heartbeat / Cron</td>
+              <td class="highlight-col"><span class="check">✓</span> Full parity</td>
+              <td><span class="check">✓</span> Full</td>
+              <td><span class="check">✓</span> Basic</td>
+              <td><span class="check">✓</span> Basic</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Chat Channels</td>
+              <td class="highlight-col">Studio + Telegram</td>
+              <td>10+ channels</td>
+              <td>9 channels</td>
+              <td>Telegram only</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Hardware Control</td>
+              <td class="highlight-col"><span class="check">✓</span> GPIO, LVGL, CAN</td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+              <td>Basic GPIO</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Display UI</td>
+              <td class="highlight-col"><span class="check">✓</span> LVGL touchscreen</td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td class="feature-name">Skills / Plugins</td>
+              <td class="highlight-col"><span class="check">✓</span> ScriptoHub</td>
+              <td><span class="check">✓</span> ClawHub</td>
+              <td><span class="check">✓</span> ClawHub</td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td class="feature-name">Power</td>
+              <td class="highlight-col"><strong>0.5W USB</strong></td>
+              <td>~15W server</td>
+              <td>~15W server</td>
+              <td>0.5W USB</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Cost</td>
+              <td class="highlight-col"><strong>$5 + API keys</strong></td>
+              <td>Server + API keys</td>
+              <td>Server + API keys</td>
+              <td>$5 + API keys</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Scripto Studio PWA -->
+    <section class="pwa-section">
+      <h2 class="section-title">
+        <span class="accent-marker">⟩</span> Scripto Studio
+      </h2>
+      <div class="pwa-card">
+        <div class="pwa-info">
+          <span class="pwa-tagline">Your Workshop — Everywhere</span>
+          <p class="pwa-desc">Flash, configure, and chat with your device from any browser. Works on macOS, Windows, Linux, and <strong>iPadOS</strong> via WebRTC/WebREPL.</p>
+          <div class="pwa-screenshot">
+            <img src="/screenshot.png" alt="Scripto Studio — MicroPython IDE with AI agent chat" loading="lazy" />
+          </div>
+          <a href="https://scriptostudio.com" class="pwa-btn" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Open Scripto Studio
+          </a>
+          <span class="pwa-meta">Progressive Web App · No install required · Any platform</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Grid -->
+    <nav class="cta-grid">
+      <a href="https://scriptohub.ai" class="cta cta-scriptohub" target="_blank" rel="noopener">
+        <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        <span class="cta-label">ScriptoHub</span>
+        <span class="cta-sub">Browse skills & apps</span>
+      </a>
+
+      <a href="https://scriptostudio.com" class="cta cta-studio" target="_blank" rel="noopener">
+        <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <line x1="8" y1="21" x2="16" y2="21"/>
+          <line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+        <span class="cta-label">Scripto Studio</span>
+        <span class="cta-sub">Open the IDE</span>
+      </a>
+
+      <a href="https://github.com/jetpax/pycoclaw" class="cta cta-github" target="_blank" rel="noopener">
+        <svg class="cta-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+        </svg>
+        <span class="cta-label">GitHub</span>
+        <span class="cta-sub">View the source</span>
+      </a>
+
+      <div class="cta cta-discord cta-coming-soon">
+        <svg class="cta-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+        </svg>
+        <span class="cta-label">Discord</span>
+        <span class="cta-sub">Coming Soon</span>
+        <span class="coming-soon-badge">Soon</span>
+      </div>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <nav class="footer-nav">
+        <a href="https://scriptohub.ai" target="_blank" rel="noopener">ScriptoHub</a>
+        <span class="footer-separator">·</span>
+        <a href="https://scriptostudio.com" target="_blank" rel="noopener">Scripto Studio</a>
+        <span class="footer-separator">·</span>
+        <a href="https://github.com/jetpax/pycoclaw" target="_blank" rel="noopener">GitHub</a>
+        <span class="footer-separator">·</span>
+        <a href="https://usrobotiq.com" target="_blank" rel="noopener">USRobotIQ</a>
+      </nav>
+      <p>Built on <a href="https://openclaw.ai" target="_blank" rel="noopener">OpenClaw</a>. Powered by PFC and <a href="https://scriptostudio.com" target="_blank" rel="noopener">Scripto Studio</a>.</p>
+      <p class="disclaimer">PycoClaw is a product of USRobotIQ. Not affiliated with Anthropic or OpenAI.</p>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  /* Starfield Background */
+  .stars {
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+      radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.6), transparent),
+      radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.7), transparent),
+      radial-gradient(2px 2px at 200px 60px, rgba(0,200,83,0.6), transparent),
+      radial-gradient(1px 1px at 250px 150px, rgba(255,255,255,0.5), transparent),
+      radial-gradient(2px 2px at 300px 40px, rgba(0,229,204,0.4), transparent);
+    background-size: 350px 200px;
+    animation: twinkle 8s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes twinkle {
+    0% { opacity: 0.4; }
+    100% { opacity: 0.7; }
+  }
+
+  .nebula {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 20%, rgba(0, 200, 83, 0.1), transparent 50%),
+      radial-gradient(ellipse 60% 60% at 80% 30%, rgba(0, 229, 204, 0.08), transparent 50%),
+      radial-gradient(ellipse 90% 70% at 50% 90%, rgba(0, 200, 83, 0.05), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px 40px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    margin-bottom: 72px;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .chip-icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 24px;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .chip-icon svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 20px var(--logo-glow));
+  }
+
+  .chip-core {
+    animation: pulse-core 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-core {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .title {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 8vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .title-main {
+    background: linear-gradient(135deg, var(--hero-title-start), var(--hero-title-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tagline {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    font-weight: 500;
+    color: var(--accent-bright);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .description {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 520px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .hero-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hero-btn-primary {
+    background: var(--accent-bright);
+    color: var(--bg-deep);
+    box-shadow: 0 4px 20px var(--shadow-accent-mid);
+  }
+
+  .hero-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px var(--shadow-accent-strong);
+  }
+
+  .hero-btn-secondary {
+    background: var(--surface-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-btn-secondary:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--shadow-accent-soft);
+  }
+
+  /* Section titles */
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  .accent-marker {
+    color: var(--accent-bright);
+    margin-right: 8px;
+  }
+
+  /* Features Grid */
+  .features {
+    margin-bottom: 72px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .feature-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
+  }
+
+  .feature-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px var(--shadow-accent-soft);
+  }
+
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 12px;
+  }
+
+  .feature-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .feature-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+
+  .feature-desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .feature-desc a {
+    color: var(--accent-bright);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .feature-desc a:hover {
+    border-bottom-color: var(--accent-bright);
+  }
+
+  /* Comparison Table */
+  .comparison {
+    margin-bottom: 72px;
+  }
+
+  .comparison-intro {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-size: 1rem;
+  }
+
+  .comparison-table-wrapper {
+    overflow-x: auto;
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    backdrop-filter: blur(10px);
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .comparison-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .comparison-table th {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 16px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+  }
+
+  .comparison-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(136, 146, 176, 0.08);
+    color: var(--text-secondary);
+  }
+
+  .comparison-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .comparison-table tbody tr:hover {
+    background: var(--surface-inset-highlight);
+  }
+
+  .highlight-col {
+    background: var(--surface-accent-soft) !important;
+    color: var(--text-primary) !important;
+    border-left: 2px solid var(--accent-bright);
+  }
+
+  thead .highlight-col {
+    color: var(--accent-bright) !important;
+  }
+
+  .feature-name {
+    font-weight: 600;
+    color: var(--text-primary) !important;
+  }
+
+  .check {
+    color: var(--accent-bright);
+    font-weight: 700;
+    margin-right: 4px;
+  }
+
+  .cross {
+    color: var(--text-muted);
+    margin-right: 4px;
+  }
+
+  .comparison-table code {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    background: var(--surface-inset-highlight);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* PWA Section */
+  .pwa-section {
+    margin-bottom: 72px;
+  }
+
+  .pwa-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 32px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+  }
+
+  .pwa-tagline {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .pwa-desc {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    max-width: 460px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+  }
+
+  .pwa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border-radius: 12px;
+    background: var(--accent-bright);
+    color: var(--bg-deep);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 20px var(--shadow-accent-mid);
+  }
+
+  .pwa-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px var(--shadow-accent-strong);
+  }
+
+  .pwa-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .pwa-meta {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .pwa-screenshot {
+    margin: 20px auto;
+    max-width: 680px;
+  }
+
+  .pwa-screenshot img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow:
+      0 6px 28px var(--shadow-accent-soft),
+      0 0 40px rgba(0, 200, 83, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .pwa-screenshot img:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 12px 40px var(--shadow-accent-mid),
+      0 0 50px rgba(0, 200, 83, 0.1);
+  }
+
+  /* CTA Grid */
+  .cta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 56px;
+  }
+
+  .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 24px 16px;
+    border-radius: 16px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.25s ease;
+    position: relative;
+  }
+
+  .cta:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-accent);
+  }
+
+  .cta-icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+  }
+
+  .cta-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .cta-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .cta-scriptohub:hover {
+    box-shadow: 0 12px 32px var(--shadow-accent-soft);
+  }
+
+  .cta-scriptohub .cta-icon {
+    color: var(--accent-bright);
+  }
+
+  .cta-studio:hover {
+    box-shadow: 0 12px 32px var(--shadow-cyan-soft);
+  }
+
+  .cta-studio .cta-icon {
+    color: var(--cyan-bright);
+  }
+
+  .cta-github:hover {
+    box-shadow: 0 12px 32px var(--shadow-github-soft);
+    color: var(--github-hover-color);
+  }
+
+  .cta-discord {
+    color: #5865F2;
+  }
+
+  .cta-coming-soon {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .coming-soon-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(88, 101, 242, 0.15);
+    color: #5865F2;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 0;
+    margin-top: auto;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .footer-nav {
+    margin-bottom: 12px;
+  }
+
+  .footer-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-nav a:hover {
+    color: var(--accent-bright);
+  }
+
+  .footer-separator {
+    margin: 0 8px;
+    color: var(--text-muted);
+  }
+
+  .footer a {
+    color: var(--accent-bright);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .footer a:hover {
+    opacity: 0.8;
+  }
+
+  .disclaimer {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    opacity: 0.6;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .container {
+      padding: 40px 16px 32px;
+    }
+
+    .hero {
+      margin-bottom: 48px;
+    }
+
+    .features, .comparison, .pwa-section {
+      margin-bottom: 48px;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-btn {
+      width: 100%;
+      max-width: 280px;
+      justify-content: center;
+    }
+
+    .comparison-table {
+      font-size: 0.78rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 10px 12px;
+    }
+
+    .cta-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-hud {
+      aspect-ratio: 4 / 3;
+    }
+
+    .rp2350-banner {
+      top: 14px;
+      left: -50px;
+      width: 200px;
+      font-size: 0.5rem;
+      padding: 4px 0;
+    }
+  }
+
+  /* RP2350 Diagonal Banner */
+  .rp2350-banner {
+    position: fixed;
+    top: 22px;
+    left: -50px;
+    width: 200px;
+    z-index: 1000;
+    background: linear-gradient(135deg, var(--accent-bright), var(--cyan-bright));
+    color: var(--bg-deep);
+    text-align: center;
+    padding: 6px 0;
+    font-family: var(--font-body);
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    transform: rotate(-45deg);
+    transform-origin: center;
+    box-shadow: 0 3px 12px var(--shadow-accent-mid);
+    pointer-events: auto;
+    overflow: visible;
+  }
+
+  .rp2350-line1 {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+  }
+
+  .rp2350-line2 {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    opacity: 0.85;
+    line-height: 1.2;
+  }
+
+  /* Hero HUD Dashboard */
+  .hero-hud {
+    margin-top: 32px;
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow:
+      0 8px 40px var(--shadow-accent-soft),
+      0 0 60px rgba(0, 200, 83, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hero-hud:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 16px 60px var(--shadow-accent-mid),
+      0 0 80px rgba(0, 200, 83, 0.12);
+  }
+
+  .hero-hud iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none;
+    display: block;
+  }
+</style>

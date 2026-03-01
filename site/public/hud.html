@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HUD Panel – PFC Monitor</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+:root{
+  --bg:#080c12;
+  --panel:#111820;
+  --rail:#1a2230;
+  --line:#506878;
+  --muted:#3a5060;
+  --accent-cool:#50d0f0;
+  --accent-warm:#d86040;
+  --accent-orange:#c87038;
+  --accent-coral:#c85848;
+  --text:#90b8d0;
+  --text-bright:#d0e8ff;
+  --cyan-bright:#40d8f8;
+  --cyan-mid:#2898c8;
+  --cyan-dark:#186888;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  background:var(--bg);
+  font-family:'Share Tech Mono', monospace;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  min-height:100vh;
+  padding-top:10px;
+  color:var(--text);
+  overflow:hidden;
+}
+
+.dashboard{
+  display:flex;
+  gap:0;
+  align-items:flex-end;
+  position:relative;
+  transform-origin:top center;
+}
+
+/* ── Gauge columns ─────────────────────── */
+.gauge-col{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  position:relative;
+}
+
+.gauge-label{
+  margin-top:10px;
+  color:var(--text);
+  letter-spacing:3px;
+  font-size:13px;
+  text-transform:uppercase;
+}
+
+.gauge-sublabel{
+  color:var(--accent-warm);
+  letter-spacing:2px;
+  font-size:10px;
+  margin-top:2px;
+}
+
+/* ── Center panel (between BRAIN and MEM) ── */
+.center-panel{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  padding:16px 20px;
+  align-self:center;
+  margin:0 10px;
+}
+
+.panel-section-label{
+  font-size:9px;
+  letter-spacing:2px;
+  color:#4a6878;
+  text-transform:uppercase;
+  margin-bottom:-6px;
+  padding-left:2px;
+}
+
+/* Provider row */
+.provider-row{
+  display:flex;
+  gap:5px;
+  justify-content:center;
+}
+
+.provider-chip{
+  width:56px;
+  height:30px;
+  border:none;
+  border-radius:4px;
+  font-family:inherit;
+  font-size:10px;
+  font-weight:bold;
+  letter-spacing:0.5px;
+  cursor:pointer;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:filter .2s, transform .15s, opacity .3s;
+  text-shadow:0 1px 3px rgba(0,0,0,.5);
+  position:relative;
+}
+.provider-chip:hover{ filter:brightness(1.2); transform:scale(1.05); }
+.provider-chip.active{ box-shadow:0 0 10px rgba(255,255,255,.15); }
+.provider-chip.dim{ opacity:0.35; filter:saturate(0.4); }
+
+.provider-chip.p-gpt{ background:linear-gradient(180deg,#4aa87c 0%,#2d7a56 100%); }
+.provider-chip.p-claude{ background:linear-gradient(180deg,#d4956a 0%,#b07040 100%); }
+.provider-chip.p-gemini{ background:linear-gradient(180deg,#6888d8 0%,#4060b0 100%); }
+.provider-chip.p-local{ background:linear-gradient(180deg,#606878 0%,#404850 100%); }
+
+/* Metric circles row */
+.metric-row{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  align-items:center;
+}
+
+.metric-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+}
+
+.metric-label{
+  font-size:8px;
+  letter-spacing:1px;
+  color:#4a6878;
+  text-transform:uppercase;
+}
+
+.metric-circle{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:none;
+  font-family:inherit;
+  font-size:10px;
+  cursor:default;
+  color:#d0e8ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-shadow:0 1px 2px rgba(0,0,0,.4);
+  transition:box-shadow .3s;
+}
+
+.metric-circle.m-in{ background:radial-gradient(circle at 35% 35%,#3898c0,#1a6080); }
+.metric-circle.m-out{ background:radial-gradient(circle at 35% 35%,#c09060,#806038); }
+.metric-circle.m-cost{ background:radial-gradient(circle at 35% 35%,#48b878,#287048); }
+.metric-circle.m-ctx{ background:radial-gradient(circle at 35% 35%,#8070b0,#504080); }
+
+/* Channel hexagons */
+.channel-row{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  align-items:center;
+}
+
+.channel-hex{
+  width:48px;
+  height:42px;
+  background:#1a3040;
+  border:none;
+  clip-path:polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  font-family:inherit;
+  font-size:9px;
+  letter-spacing:0.5px;
+  cursor:pointer;
+  color:var(--accent-cool);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background .2s, filter .2s;
+}
+.channel-hex.active{ background:#2a5060; filter:brightness(1.3); }
+.channel-hex.dim{ opacity:0.4; color:#3a5060; }
+
+/* Heartbeat diamond */
+.heartbeat-diamond{
+  width:12px;
+  height:12px;
+  background:var(--accent-cool);
+  transform:rotate(45deg);
+  display:inline-block;
+  margin-left:4px;
+  animation:hb-pulse 1.5s ease-in-out infinite;
+}
+@keyframes hb-pulse{
+  0%,100%{ opacity:0.4; box-shadow:none; }
+  50%{ opacity:1; box-shadow:0 0 8px var(--accent-cool); }
+}
+
+/* Status ring indicators */
+.status-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  justify-items:center;
+}
+
+.status-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+}
+
+.status-ring{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:2.5px solid;
+  font-family:inherit;
+  font-size:10px;
+  cursor:default;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:transparent;
+  transition:box-shadow .3s;
+}
+.status-ring.s-ok{ border-color:#48c880; color:#48c880; }
+.status-ring.s-warn{ border-color:#d8a848; color:#d8a848; }
+.status-ring.s-info{ border-color:#58b8d0; color:#58b8d0; }
+.status-ring.s-err{ border-color:#d05848; color:#d05848; }
+
+.status-label{
+  font-size:7px;
+  letter-spacing:1px;
+  color:#3a5060;
+  text-transform:uppercase;
+}
+
+/* ── Subtle scanline overlay ───────────── */
+body::after{
+  content:'';
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,.03) 2px,
+    rgba(0,0,0,.03) 4px
+  );
+  pointer-events:none;
+  z-index:100;
+}
+
+/* Ambient glow behind dashboard */
+.dashboard::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  width:1000px;height:700px;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse,rgba(50,160,200,.05) 0%,transparent 65%);
+  pointer-events:none;
+  z-index:-1;
+}
+</style>
+</head>
+<body>
+
+<div class="dashboard" id="dashboard"></div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+
+/* ── Helper SVG element creators ────────── */
+function svgEl(tag, attrs, parent) {
+  const el = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  if (parent) parent.appendChild(el);
+  return el;
+}
+
+function addText(parent, x, y, text, cls, extra = {}) {
+  const t = svgEl('text', { x, y, class: cls, ...extra }, parent);
+  t.textContent = text;
+  return t;
+}
+
+/* ── Color interpolation for dynamic bar colors ── */
+// Returns [r, g, b] for a 0-1 percentage:
+//   0-0.25  = neon green
+//   0.25-0.75 = cyan/blue (current look)
+//   0.75-1.0 = neon red
+function valueColor(pct) {
+  // Color stops: green → cyan → red
+  const stops = [
+    { p: 0.00, r: 40,  g: 230, b: 90  },  // neon green
+    { p: 0.25, r: 40,  g: 220, b: 140 },  // green-cyan
+    { p: 0.50, r: 48,  g: 200, b: 240 },  // cyan (current)
+    { p: 0.75, r: 220, g: 140, b: 60  },  // orange
+    { p: 1.00, r: 240, g: 60,  b: 50  },  // neon red
+  ];
+  pct = Math.max(0, Math.min(1, pct));
+  let i = 0;
+  while (i < stops.length - 2 && stops[i + 1].p < pct) i++;
+  const a = stops[i], b = stops[i + 1];
+  const t = (pct - a.p) / (b.p - a.p);
+  return [
+    Math.round(a.r + (b.r - a.r) * t),
+    Math.round(a.g + (b.g - a.g) * t),
+    Math.round(a.b + (b.b - a.b) * t)
+  ];
+}
+
+function rgbStr(rgb) { return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`; }
+function rgbDark(rgb) { return `rgb(${rgb[0]*0.4|0},${rgb[1]*0.4|0},${rgb[2]*0.4|0})`; }
+function rgbBright(rgb) {
+  return `rgb(${Math.min(255,rgb[0]+40)},${Math.min(255,rgb[1]+40)},${Math.min(255,rgb[2]+40)})`;
+}
+function rgbGlow(rgb) { return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.12)`; }
+
+/* ── Channel bracket decorator (squared ] style) ── */
+function drawBracket(svg, x, yTop, yBot, facing) {
+  // Squared channel bracket like ] for 'right', [ for 'left'
+  // with small rounded corners (r = corner radius)
+  const armLen = 12;   // horizontal arm length
+  const r = 4;         // corner radius
+  const dir = facing === 'right' ? 1 : -1;
+  const endX = x + armLen * dir;
+
+  // Path: top arm → rounded corner → vertical drop → rounded corner → bottom arm
+  const d = facing === 'right'
+    ? `M ${x},${yTop} L ${endX - r},${yTop} Q ${endX},${yTop} ${endX},${yTop + r} L ${endX},${yBot - r} Q ${endX},${yBot} ${endX - r},${yBot} L ${x},${yBot}`
+    : `M ${x},${yTop} L ${endX + r},${yTop} Q ${endX},${yTop} ${endX},${yTop + r} L ${endX},${yBot - r} Q ${endX},${yBot} ${endX + r},${yBot} L ${x},${yBot}`;
+
+  svgEl('path', {
+    d,
+    fill: 'none',
+    stroke: '#3a6878',
+    'stroke-width': '1.5',
+    'stroke-linecap': 'round',
+    'stroke-linejoin': 'round'
+  }, svg);
+}
+
+/* ── Gauge builder ──────────────────────── */
+function createGauge(container, {
+  min, max, majorStep, minorStep, initial,
+  header, label, sublabel,
+  fillColor = '#30c0e8',
+  accentColor = '#d86040',
+  width = 100,
+  gaugeHeight = 440,
+  showRightTicks = false,
+  showPointerLeft = true,
+  showBrackets = false,
+  bracketRanges = []
+}) {
+  const col = document.createElement('div');
+  col.className = 'gauge-col';
+
+  const svgW = width + 100;
+  const svgH = gaugeHeight + 130;
+  const svg = svgEl('svg', { width: svgW, height: svgH });
+
+  const top = 65;
+  const bottom = top + gaugeHeight;
+  const railX = 50;                // left edge of rail
+  const railW = 30;                // rail width
+  const barX = railX + railW + 10; // bar channel left edge
+  const barW = 18;                 // fill bar width
+
+  function valueToY(v) {
+    return bottom - ((v - min) / (max - min)) * gaugeHeight;
+  }
+
+  // ── Defs ──
+  const defs = svgEl('defs', {}, svg);
+
+  // Main fill gradient — dynamic color (starts cyan, updated in setValue)
+  const grad = svgEl('linearGradient', {
+    id: `fill-${header}`, x1: '0%', y1: '100%', x2: '0%', y2: '0%'
+  }, defs);
+  const gradStop0 = svgEl('stop', { offset: '0%', 'stop-color': '#1888a8', 'stop-opacity': '0.7' }, grad);
+  const gradStop1 = svgEl('stop', { offset: '40%', 'stop-color': '#30b8e0', 'stop-opacity': '0.85' }, grad);
+  const gradStop2 = svgEl('stop', { offset: '100%', 'stop-color': '#58e0ff', 'stop-opacity': '1' }, grad);
+
+  // Glow filter (more intense)
+  const filter = svgEl('filter', {
+    id: `glow-${header}`, x: '-80%', y: '-10%', width: '260%', height: '120%'
+  }, defs);
+  svgEl('feGaussianBlur', { in: 'SourceGraphic', stdDeviation: '5', result: 'blur' }, filter);
+  const merge = svgEl('feMerge', {}, filter);
+  svgEl('feMergeNode', { in: 'blur' }, merge);
+  svgEl('feMergeNode', { in: 'SourceGraphic' }, merge);
+
+  // Subtle glow for pointer
+  const pFilter = svgEl('filter', {
+    id: `pglow-${header}`, x: '-100%', y: '-100%', width: '300%', height: '300%'
+  }, defs);
+  svgEl('feGaussianBlur', { in: 'SourceGraphic', stdDeviation: '2', result: 'blur' }, pFilter);
+  const pMerge = svgEl('feMerge', {}, pFilter);
+  svgEl('feMergeNode', { in: 'blur' }, pMerge);
+  svgEl('feMergeNode', { in: 'SourceGraphic' }, pMerge);
+
+  // ── Header section ──
+  // Small square indicators at header level
+  svgEl('rect', { x: railX - 10, y: top - 14, width: 7, height: 7, fill: '#3a5060', rx: 1 }, svg);
+  svgEl('rect', { x: barX + barW + 8, y: top - 14, width: 7, height: 7, fill: '#3a5060', rx: 1 }, svg);
+
+  // Accent bar (orange/red) at top right
+  svgEl('rect', {
+    x: barX + barW + 8,
+    y: top - 28,
+    width: 18, height: 6,
+    rx: 1,
+    fill: accentColor
+  }, svg);
+
+  // Header text
+  addText(svg, railX + 4, top - 22, header, '', {
+    fill: '#b0d0e0',
+    'font-family': "'Share Tech Mono', monospace",
+    'font-size': '12',
+    'letter-spacing': '2'
+  });
+
+  // ── Bottom indicator squares ──
+  svgEl('rect', {
+    x: railX - 10, y: bottom + 6,
+    width: 8, height: 8,
+    fill: fillColor, rx: 1
+  }, svg);
+  svgEl('rect', {
+    x: barX + barW + 8, y: bottom + 6,
+    width: 8, height: 8,
+    fill: fillColor, rx: 1,
+    opacity: '0.7'
+  }, svg);
+
+  // ── Rail frame (left vertical track) ──
+  // Outer frame
+  svgEl('rect', {
+    x: railX, y: top - 4, width: railW, height: gaugeHeight + 8,
+    fill: 'none', stroke: '#2a3a48', 'stroke-width': 2, rx: 3
+  }, svg);
+
+  // Inner dark background
+  svgEl('rect', {
+    x: railX + 3, y: top, width: railW - 6, height: gaugeHeight,
+    fill: '#0c1018', rx: 1
+  }, svg);
+
+  // ── Bar channel (right vertical track) ──
+  // Outer frame
+  svgEl('rect', {
+    x: barX - 3, y: top - 4, width: barW + 6, height: gaugeHeight + 8,
+    fill: 'none', stroke: '#2a3a48', 'stroke-width': 2, rx: 3
+  }, svg);
+
+  // Inner dark background
+  svgEl('rect', {
+    x: barX, y: top, width: barW, height: gaugeHeight,
+    fill: '#080c10', rx: 1
+  }, svg);
+
+  // ── Tick marks ──
+  for (let v = min; v <= max; v = +(v + minorStep).toFixed(4)) {
+    const y = valueToY(v);
+    svgEl('line', {
+      x1: railX + 5, x2: railX + railW - 5,
+      y1: y, y2: y,
+      stroke: '#2a3848', 'stroke-width': '1'
+    }, svg);
+  }
+
+  for (let v = min; v <= max; v = +(v + majorStep).toFixed(4)) {
+    const y = valueToY(v);
+    // Brighter major tick
+    svgEl('line', {
+      x1: railX + 3, x2: railX + railW - 3,
+      y1: y, y2: y,
+      stroke: '#4a6878', 'stroke-width': '1.5'
+    }, svg);
+
+    // Label
+    addText(svg, railX - 8, y, String(v), '', {
+      fill: '#5a8098',
+      'font-family': "'Share Tech Mono', monospace",
+      'font-size': '10',
+      'text-anchor': 'end',
+      'dominant-baseline': 'middle'
+    });
+
+    // Right side ticks (for TEMP)
+    if (showRightTicks) {
+      svgEl('line', {
+        x1: barX + barW + 6, x2: barX + barW + 14,
+        y1: y, y2: y,
+        stroke: '#3a5060', 'stroke-width': '1'
+      }, svg);
+      addText(svg, barX + barW + 18, y, String(v), '', {
+        fill: '#5a8098',
+        'font-family': "'Share Tech Mono', monospace",
+        'font-size': '10',
+        'text-anchor': 'start',
+        'dominant-baseline': 'middle'
+      });
+    }
+  }
+
+  // ── Bracket decorations ──
+  if (showBrackets && bracketRanges.length) {
+    bracketRanges.forEach(([vLow, vHigh, side]) => {
+      const yT = valueToY(vHigh);
+      const yB = valueToY(vLow);
+      const bx = side === 'right' ? barX + barW + 22 : railX - 20;
+      drawBracket(svg, bx, yT, yB, side);
+    });
+  }
+
+  // ── Ambient glow bar (behind the fill for bloom effect) ──
+  const glowBar = svgEl('rect', {
+    x: barX - 4, width: barW + 8,
+    rx: 6,
+    fill: 'rgba(60,200,240,.12)',
+    filter: `url(#glow-${header})`
+  }, svg);
+
+  // ── Value fill bar ──
+  const fillBar = svgEl('rect', {
+    x: barX + 2, width: barW - 4,
+    rx: 3,
+    fill: `url(#fill-${header})`,
+    filter: `url(#glow-${header})`
+  }, svg);
+
+  // ── Pointer (triangle marker) ──
+  const pointer = svgEl('polygon', {
+    fill: '#ffffff',
+    filter: `url(#pglow-${header})`
+  }, svg);
+
+  function setValue(val) {
+    val = Math.max(min, Math.min(max, val));
+    const y = valueToY(val);
+    const pct = (val - min) / (max - min);
+
+    // Dynamic color based on value percentage
+    const col = valueColor(pct);
+    gradStop0.setAttribute('stop-color', rgbDark(col));
+    gradStop1.setAttribute('stop-color', rgbStr(col));
+    gradStop2.setAttribute('stop-color', rgbBright(col));
+    glowBar.setAttribute('fill', rgbGlow(col));
+
+    fillBar.setAttribute('y', y);
+    fillBar.setAttribute('height', bottom - y);
+
+    glowBar.setAttribute('y', y - 4);
+    glowBar.setAttribute('height', bottom - y + 8);
+
+    if (showPointerLeft) {
+      pointer.setAttribute('points',
+        `${railX - 18},${y} ${railX - 6},${y - 7} ${railX - 6},${y + 7}`
+      );
+    } else {
+      pointer.setAttribute('points',
+        `${barX + barW + 20},${y} ${barX + barW + 8},${y - 7} ${barX + barW + 8},${y + 7}`
+      );
+    }
+  }
+
+  setValue(initial);
+
+  col.appendChild(svg);
+
+  // Label below
+  const labelDiv = document.createElement('div');
+  labelDiv.className = 'gauge-label';
+  labelDiv.textContent = label;
+  col.appendChild(labelDiv);
+
+  // Sublabel (e.g. CYCLES)
+  if (sublabel) {
+    const sub = document.createElement('div');
+    sub.className = 'gauge-sublabel';
+    sub.textContent = sublabel;
+    col.appendChild(sub);
+  }
+
+  container.appendChild(col);
+  return { setValue };
+}
+
+/* ── Center control panel builder ──────── */
+function createCenterPanel(container) {
+  const panel = document.createElement('div');
+  panel.className = 'center-panel';
+
+  // ── PROVIDERS ──
+  const provLabel = document.createElement('div');
+  provLabel.className = 'panel-section-label';
+  provLabel.textContent = 'PROVIDERS';
+  panel.appendChild(provLabel);
+
+  const provRow = document.createElement('div');
+  provRow.className = 'provider-row';
+  [
+    { label: 'GPT', cls: 'p-gpt', active: true },
+    { label: 'Claude', cls: 'p-claude', active: true },
+    { label: 'Gemini', cls: 'p-gemini', active: false },
+    { label: 'Local', cls: 'p-local', active: true }
+  ].forEach(p => {
+    const chip = document.createElement('button');
+    chip.className = `provider-chip ${p.cls} ${p.active ? 'active' : 'dim'}`;
+    chip.textContent = p.label;
+    provRow.appendChild(chip);
+  });
+  panel.appendChild(provRow);
+
+  // ── TOKEN METRICS ──
+  const tokLabel = document.createElement('div');
+  tokLabel.className = 'panel-section-label';
+  tokLabel.textContent = 'TOKENS';
+  panel.appendChild(tokLabel);
+
+  const metricRow = document.createElement('div');
+  metricRow.className = 'metric-row';
+  const metricEls = {};
+  [
+    { key: 'in',   label: 'IN',   cls: 'm-in',   val: '12.4K' },
+    { key: 'out',  label: 'OUT',  cls: 'm-out',  val: '3.8K' },
+    { key: 'cost', label: '$/HR', cls: 'm-cost', val: '$0.02' },
+    { key: 'ctx',  label: 'CTX',  cls: 'm-ctx',  val: '64%' }
+  ].forEach(m => {
+    const item = document.createElement('div');
+    item.className = 'metric-item';
+    const lbl = document.createElement('span');
+    lbl.className = 'metric-label';
+    lbl.textContent = m.label;
+    const circle = document.createElement('div');
+    circle.className = `metric-circle ${m.cls}`;
+    circle.textContent = m.val;
+    item.appendChild(lbl);
+    item.appendChild(circle);
+    metricRow.appendChild(item);
+    metricEls[m.key] = circle;
+  });
+  panel.appendChild(metricRow);
+
+  // ── CHANNELS ──
+  const chLabel = document.createElement('div');
+  chLabel.className = 'panel-section-label';
+  chLabel.textContent = 'CHANNELS';
+  panel.appendChild(chLabel);
+
+  const chRow = document.createElement('div');
+  chRow.className = 'channel-row';
+  [
+    { label: 'Studio', active: true },
+    { label: 'TG', active: true },
+    { label: 'M2M', active: false }
+  ].forEach(ch => {
+    const hex = document.createElement('button');
+    hex.className = `channel-hex ${ch.active ? 'active' : 'dim'}`;
+    hex.textContent = ch.label;
+    chRow.appendChild(hex);
+  });
+  // Heartbeat diamond
+  const hb = document.createElement('span');
+  hb.className = 'heartbeat-diamond';
+  chRow.appendChild(hb);
+  panel.appendChild(chRow);
+
+  // ── SYSTEM VITALS ──
+  const sysLabel = document.createElement('div');
+  sysLabel.className = 'panel-section-label';
+  sysLabel.textContent = 'SYSTEM';
+  panel.appendChild(sysLabel);
+
+  const sysGrid = document.createElement('div');
+  sysGrid.className = 'status-grid';
+  const statusEls = {};
+  [
+    { key: 'up',   label: 'UPTIME', cls: 's-ok',   val: '4h' },
+    { key: 'cron', label: 'CRON',   cls: 's-info', val: '3' },
+    { key: 'hb',   label: 'HB',     cls: 's-ok',   val: '\u2713' },
+    { key: 'err',  label: 'ERR',    cls: 's-err',  val: '0' }
+  ].forEach(s => {
+    const item = document.createElement('div');
+    item.className = 'status-item';
+    const ring = document.createElement('div');
+    ring.className = `status-ring ${s.cls}`;
+    ring.textContent = s.val;
+    const lbl = document.createElement('span');
+    lbl.className = 'status-label';
+    lbl.textContent = s.label;
+    item.appendChild(ring);
+    item.appendChild(lbl);
+    sysGrid.appendChild(item);
+    statusEls[s.key] = ring;
+  });
+  panel.appendChild(sysGrid);
+
+  container.appendChild(panel);
+
+  // ── Simulated live data updates ──
+  let tokIn = 12400, tokOut = 3800, costAcc = 0.02, uptimeMin = 240;
+  setInterval(() => {
+    tokIn += Math.floor(Math.random() * 800);
+    tokOut += Math.floor(Math.random() * 300);
+    costAcc += Math.random() * 0.005;
+    uptimeMin++;
+    const ctx = Math.min(99, 40 + Math.random() * 50);
+
+    metricEls.in.textContent = tokIn > 999999 ? (tokIn/1e6).toFixed(1)+'M' : (tokIn/1e3).toFixed(1)+'K';
+    metricEls.out.textContent = tokOut > 999999 ? (tokOut/1e6).toFixed(1)+'M' : (tokOut/1e3).toFixed(1)+'K';
+    metricEls.cost.textContent = '$' + costAcc.toFixed(2);
+    metricEls.ctx.textContent = Math.round(ctx) + '%';
+
+    // Uptime
+    const h = Math.floor(uptimeMin / 60);
+    const m = uptimeMin % 60;
+    statusEls.up.textContent = h > 0 ? h + 'h' : m + 'm';
+
+    // Randomly toggle error count
+    const errs = Math.random() > 0.9 ? Math.floor(Math.random()*3) : 0;
+    statusEls.err.textContent = errs;
+    statusEls.err.className = `status-ring ${errs > 0 ? 's-warn' : 's-ok'}`;
+  }, 4000);
+}
+
+/* ── BUILD THE DASHBOARD ───────────────── */
+const dash = document.getElementById('dashboard');
+
+const brain = createGauge(dash, {
+  min: 0, max: 40, majorStep: 5, minorStep: 1, initial: 30,
+  header: 'LLM', label: 'BRAIN',sublabel: '$/MTOKEN',
+  fillColor: '#40d0f0',
+  accentColor: '#c86040',
+  gaugeHeight: 440,
+  showPointerLeft: true
+});
+
+createCenterPanel(dash);
+
+const mem = createGauge(dash, {
+  min: 0, max: 8, majorStep: 2, minorStep: 0.5, initial: 1.5,
+  header: 'RAM', label: 'MEMORY', sublabel: 'MB',
+  fillColor: '#40d0f0',
+  accentColor: '#c86040',
+  gaugeHeight: 440,
+  showPointerLeft: false,
+  showBrackets: true,
+  bracketRanges: [[1, 4, 'right']]
+});
+
+const resp = createGauge(dash, {
+  min: 0, max: 500, majorStep: 100, minorStep: 20, initial: 50,
+  header: 'PING', label: 'RESP', sublabel: 'MS',
+  fillColor: '#40d0f0',
+  accentColor: '#c86040',
+  gaugeHeight: 440,
+  showPointerLeft: false,
+  showBrackets: true,
+  bracketRanges: [[0, 200, 'right']]
+});
+
+const temp = createGauge(dash, {
+  min: 0, max: 100, majorStep: 10, minorStep: 2, initial: 35,
+  header: 'CPU', label: 'TEMP',sublabel: 'DEGREES',
+  fillColor: '#40d0f0',
+  accentColor: '#c86040',
+  gaugeHeight: 440,
+  showPointerLeft: false,
+  showRightTicks: true,
+  showBrackets: true,
+  bracketRanges: [[20, 60, 'right']]
+});
+
+/* ── Animate with smooth random walk ───── */
+let vals = { brain: 30, mem: 1.5, resp: 50, temp: 35 };
+let targets = { ...vals };
+
+function smoothStep(current, target, speed) {
+  return current + (target - current) * speed;
+}
+
+setInterval(() => {
+  targets.brain = 5 + Math.random() * 30;
+  targets.mem = 1 + Math.random() * 6;
+  targets.resp = 50 + Math.random() * 500;
+  targets.temp = 33.5 + Math.random() * 7;
+}, 3000);
+
+function animate() {
+  vals.brain = smoothStep(vals.brain, targets.brain, 0.04);
+  vals.mem = smoothStep(vals.mem, targets.mem, 0.04);
+  vals.resp = smoothStep(vals.resp, targets.resp, 0.04);
+  vals.temp = smoothStep(vals.temp, targets.temp, 0.04);
+
+  brain.setValue(vals.brain);
+  mem.setValue(vals.mem);
+  resp.setValue(vals.resp);
+  temp.setValue(vals.temp);
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ── Click feedback on buttons ─────────── */
+document.querySelectorAll('.btn-square, .btn-circle, .btn-hex, .btn-round-sm').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.style.transform = 'scale(0.9)';
+    setTimeout(() => btn.style.transform = '', 150);
+  });
+});
+
+/* ── Auto-scale dashboard to fit viewport (for iframe embed) ── */
+function fitToViewport() {
+  const d = document.getElementById('dashboard');
+  // Reset to measure natural size
+  d.style.transform = 'none';
+  const rect = d.getBoundingClientRect();
+  const scaleX = window.innerWidth / rect.width;
+  const scaleY = window.innerHeight / rect.height;
+  const scale = Math.min(scaleX, scaleY, 1) * 0.95; // 95% with margin
+  d.style.transform = `scale(${scale})`;
+}
+// Run after layout settles
+requestAnimationFrame(() => { requestAnimationFrame(fitToViewport); });
+window.addEventListener('resize', fitToViewport);
+</script>
+</body>
+</html>
