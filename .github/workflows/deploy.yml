@@ -1,6 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
+  push:
+    paths:
+      - 'site/**'
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -10,17 +14,20 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
+        uses: actions/checkout@v4
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
@@ -31,9 +38,9 @@ jobs:
         run: bun run build
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v3
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: site/dist
 
   deploy:
     environment:
@@ -44,4 +51,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        uses: actions/deploy-pages@v4
