@@ -33,13 +33,13 @@ Built on MicroPython, it supports:
 
 ```
 ┌──────────────────────────────────┐
-│          Scripto Studio          │  Web IDE + Device Manager
+│     PFC (Prefrontal Cortex)      │  AI Agent Orchestrator
 ├──────────────────────────────────┤
 │          ScriptoHub              │  Extension Marketplace
 ├──────────────────────────────────┤
-│     PFC (Prefrontal Cortex)      │  AI Agent Orchestrator
+│          Scripto Studio          │  PWA IDE + Device Manager
 ├──────────────────────────────────┤
-│          pyDirect                │  MicroPython + Native C modules
+│          MicroPython             │  + Native C modules
 ├──────────────────────────────────┤
 │        ESP32-S3 Hardware         │  WiFi · BLE · USB · PSRAM
 └──────────────────────────────────┘
@@ -50,7 +50,7 @@ Built on MicroPython, it supports:
 | Platform | Chip | Status |
 |----------|------|--------|
 | ESP32-S3 | Xtensa LX7 | ✅ Production |
-| ESP32-P4 | RISC-V | 🚧 Coming Soon |
+| ESP32-P4 | RISC-V | ✅ Production |
 | RP2350 | ARM Cortex-M33 | 🚧 Coming Soon |
 
 ## Related Projects
