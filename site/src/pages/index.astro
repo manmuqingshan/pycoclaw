@@ -104,7 +104,7 @@ const siIcon = (icon: any) => icon.path;
             <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
           </div>
           <h3 class="feature-title">Full Agent Loop</h3>
-          <p class="feature-desc">Complete OpenClaw reasoning engine: recursive tool calls, context compaction, dual-loop architecture. Full parity.</p>
+          <p class="feature-desc">Complete OpenClaw reasoning engine: recursive tool calls, context compaction, dual-loop architecture. C-native SSE streaming for real-time token delivery.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">
@@ -142,7 +142,7 @@ const siIcon = (icon: any) => icon.path;
       <h2 class="section-title">
         <span class="accent-marker">⟩</span> How It Compares
       </h2>
-      <p class="comparison-intro">PycoClaw brings full OpenClaw agent parity to embedded hardware — something no other project achieves.</p>
+      <p class="comparison-intro">PycoClaw brings full OpenClaw agent parity to embedded hardware — something no other project achieves. <strong>Scripted runtimes</strong> let you modify agent behaviour live on the device; compiled binaries require a rebuild.</p>
       <div class="comparison-table-wrapper">
         <table class="comparison-table">
           <thead>
@@ -151,43 +151,100 @@ const siIcon = (icon: any) => icon.path;
               <th class="highlight-col">PycoClaw</th>
               <th>OpenClaw</th>
               <th>Nanobot</th>
+              <th>PicoClaw</th>
+              <th>NullClaw</th>
               <th>MimiClaw</th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <td class="feature-name">Approach</td>
+              <td class="highlight-col"><span class="approach-tag scripted">🔧 Scripted</span></td>
+              <td><span class="approach-tag scripted">🔧 Scripted</span></td>
+              <td><span class="approach-tag scripted">🔧 Scripted</span></td>
+              <td><span class="approach-tag compiled">⚙️ Compiled</span></td>
+              <td><span class="approach-tag compiled">⚙️ Compiled</span></td>
+              <td><span class="approach-tag compiled">⚙️ Compiled</span></td>
+            </tr>
+            <tr>
               <td class="feature-name">Runtime</td>
               <td class="highlight-col"><strong>MicroPython</strong></td>
               <td>Node.js (server)</td>
               <td>Python (server)</td>
+              <td>Go (binary)</td>
+              <td>Zig (static)</td>
               <td>C (ESP32)</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Runtime Modifiable</td>
+              <td class="highlight-col"><span class="check">✓</span> Live on device</td>
+              <td><span class="check">✓</span> Hot reload</td>
+              <td><span class="check">✓</span> Edit &amp; restart</td>
+              <td><span class="cross">✗</span> Rebuild</td>
+              <td><span class="cross">✗</span> Rebuild</td>
+              <td><span class="cross">✗</span> Reflash</td>
             </tr>
             <tr>
               <td class="feature-name">Install</td>
               <td class="highlight-col"><strong>One-click web flash</strong></td>
               <td><code>npm i -g</code></td>
               <td><code>pip install</code></td>
+              <td><code>make install</code></td>
+              <td><code>zig build</code></td>
               <td>ESP-IDF build</td>
             </tr>
             <tr>
               <td class="feature-name">Agent Loop</td>
               <td class="highlight-col"><span class="check">✓</span> Full dual-loop</td>
               <td><span class="check">✓</span> Full dual-loop</td>
-              <td><span class="check">✓</span> Basic</td>
+              <td><span class="check">✓</span> Full</td>
+              <td><span class="check">✓</span> Full</td>
+              <td><span class="check">✓</span> Full</td>
               <td><span class="check">✓</span> Basic ReAct</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Streaming</td>
+              <td class="highlight-col"><span class="check">✓</span> <strong>C-native SSE</strong></td>
+              <td><span class="check">✓</span> SSE</td>
+              <td><span class="check">✓</span> SSE</td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="check">✓</span> SSE</td>
+              <td><span class="cross">✗</span></td>
             </tr>
             <tr>
               <td class="feature-name">Tool Calling</td>
               <td class="highlight-col"><span class="check">✓</span> Recursive</td>
               <td><span class="check">✓</span> Recursive</td>
               <td><span class="check">✓</span> Yes</td>
+              <td><span class="check">✓</span> Yes</td>
+              <td><span class="check">✓</span> 18+ tools</td>
               <td><span class="check">✓</span> 5 tools</td>
+            </tr>
+            <tr>
+              <td class="feature-name">Sub-Agents</td>
+              <td class="highlight-col"><span class="check">✓</span> bg_tasks</td>
+              <td><span class="check">✓</span> sessions_spawn</td>
+              <td><span class="check">✓</span> Subagent</td>
+              <td><span class="check">✓</span> Spawn tool</td>
+              <td><span class="check">✓</span> Subagents</td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td class="feature-name">Multi-Model</td>
+              <td class="highlight-col"><span class="check">✓</span> Provider routing</td>
+              <td><span class="check">✓</span> Failover + routing</td>
+              <td><span class="check">✓</span> 16+ providers</td>
+              <td><span class="check">✓</span> model_list</td>
+              <td><span class="check">✓</span> 22+ providers</td>
+              <td>2 providers</td>
             </tr>
             <tr>
               <td class="feature-name">Memory</td>
               <td class="highlight-col"><span class="check">✓</span> Hybrid TF-IDF + Vector</td>
               <td><span class="check">✓</span> Vector DB</td>
               <td>Basic file</td>
+              <td>MEMORY.md</td>
+              <td><span class="check">✓</span> FTS5 + Vector</td>
               <td>MEMORY.md only</td>
             </tr>
             <tr>
@@ -196,26 +253,25 @@ const siIcon = (icon: any) => icon.path;
               <td><span class="check">✓</span> LLM summarization</td>
               <td><span class="cross">✗</span></td>
               <td><span class="cross">✗</span></td>
-            </tr>
-            <tr>
-              <td class="feature-name">Session History</td>
-              <td class="highlight-col"><span class="check">✓</span> JSONL tree</td>
-              <td><span class="check">✓</span> JSONL tree</td>
-              <td>Basic</td>
-              <td>JSONL</td>
+              <td><span class="check">✓</span> Auto</td>
+              <td><span class="cross">✗</span></td>
             </tr>
             <tr>
               <td class="feature-name">Heartbeat / Cron</td>
               <td class="highlight-col"><span class="check">✓</span> Full parity</td>
               <td><span class="check">✓</span> Full</td>
-              <td><span class="check">✓</span> Basic</td>
+              <td><span class="check">✓</span> Full</td>
+              <td><span class="check">✓</span> Full</td>
+              <td><span class="check">✓</span> Full</td>
               <td><span class="check">✓</span> Basic</td>
             </tr>
             <tr>
               <td class="feature-name">Chat Channels</td>
-              <td class="highlight-col">Studio + Telegram</td>
-              <td>10+ channels</td>
+              <td class="highlight-col">Studio + Telegram (Extensible)</td>
+              <td>14+ channels</td>
               <td>9 channels</td>
+              <td>6 channels</td>
+              <td>18 channels</td>
               <td>Telegram only</td>
             </tr>
             <tr>
@@ -223,11 +279,15 @@ const siIcon = (icon: any) => icon.path;
               <td class="highlight-col"><span class="check">✓</span> GPIO, LVGL, CAN</td>
               <td><span class="cross">✗</span></td>
               <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+              <td>Serial, GPIO, Arduino</td>
               <td>Basic GPIO</td>
             </tr>
             <tr>
               <td class="feature-name">Display UI</td>
               <td class="highlight-col"><span class="check">✓</span> LVGL touchscreen</td>
+              <td>Canvas (A2UI)</td>
+              <td><span class="cross">✗</span></td>
               <td><span class="cross">✗</span></td>
               <td><span class="cross">✗</span></td>
               <td><span class="cross">✗</span></td>
@@ -237,13 +297,26 @@ const siIcon = (icon: any) => icon.path;
               <td class="highlight-col"><span class="check">✓</span> ScriptoHub</td>
               <td><span class="check">✓</span> ClawHub</td>
               <td><span class="check">✓</span> ClawHub</td>
+              <td><span class="check">✓</span> ClawHub</td>
+              <td><span class="check">✓</span> Skill packs</td>
               <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td class="feature-name">Binary / Footprint</td>
+              <td class="highlight-col">~2 MB firmware</td>
+              <td>~28 MB dist</td>
+              <td>Scripts (~4K LoC)</td>
+              <td>~8 MB binary</td>
+              <td>678 KB binary</td>
+              <td>~1 MB firmware</td>
             </tr>
             <tr>
               <td class="feature-name">Power</td>
               <td class="highlight-col"><strong>0.5W USB</strong></td>
               <td>~15W server</td>
               <td>~15W server</td>
+              <td>~2W SBC</td>
+              <td>~2W SBC</td>
               <td>0.5W USB</td>
             </tr>
             <tr>
@@ -251,10 +324,32 @@ const siIcon = (icon: any) => icon.path;
               <td class="highlight-col"><strong>$5 + API keys</strong></td>
               <td>Server + API keys</td>
               <td>Server + API keys</td>
+              <td>$10 + API keys</td>
+              <td>$5 + API keys</td>
               <td>$5 + API keys</td>
             </tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- ScriptoHub -->
+    <section class="pwa-section">
+      <h2 class="section-title">
+        <span class="accent-marker">⟩</span> ScriptoHub
+      </h2>
+      <div class="pwa-card">
+        <div class="pwa-info">
+          <span class="pwa-tagline">Agent Skills — Discovered Autonomously</span>
+          <p class="pwa-desc">A growing library of <strong>ScriptOs</strong> skill packs that your agent can search, discover, and install on its own — sensor drivers, hardware integrations, display widgets, and more. No manual setup; the agent finds what it needs.</p>
+          <div class="pwa-screenshot">
+            <img src="/scriptohub.png" alt="ScriptoHub — browse and install MicroPython skills and drivers" loading="lazy" />
+          </div>
+          <a href="https://scriptohub.com" class="pwa-btn" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Browse ScriptoHub
+          </a>
+        </div>
       </div>
     </section>
 
@@ -373,7 +468,7 @@ const siIcon = (icon: any) => icon.path;
   .container {
     position: relative;
     z-index: 1;
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 60px 24px 40px;
     min-height: 100vh;
@@ -598,7 +693,7 @@ const siIcon = (icon: any) => icon.path;
   .comparison-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     white-space: nowrap;
   }
 
@@ -661,10 +756,32 @@ const siIcon = (icon: any) => icon.path;
 
   .comparison-table code {
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     background: var(--surface-inset-highlight);
     padding: 2px 6px;
     border-radius: 4px;
+  }
+
+  .approach-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .approach-tag.scripted {
+    background: rgba(0, 200, 83, 0.15);
+    color: var(--accent-bright);
+    border: 1px solid rgba(0, 200, 83, 0.3);
+  }
+
+  .approach-tag.compiled {
+    background: rgba(136, 146, 176, 0.12);
+    color: var(--text-muted);
+    border: 1px solid rgba(136, 146, 176, 0.2);
   }
 
   /* PWA Section */
@@ -913,12 +1030,17 @@ const siIcon = (icon: any) => icon.path;
     }
 
     .comparison-table {
-      font-size: 0.78rem;
+      font-size: 0.72rem;
     }
 
     .comparison-table th,
     .comparison-table td {
-      padding: 10px 12px;
+      padding: 8px 10px;
+    }
+
+    .approach-tag {
+      font-size: 0.65rem;
+      padding: 2px 7px;
     }
 
     .cta-grid {

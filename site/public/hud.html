@@ -248,7 +248,7 @@ body{
   border-radius:50%;
   border:2.5px solid;
   font-family:inherit;
-  font-size:10px;
+  font-size:14px;
   cursor:default;
   display:flex;
   align-items:center;
@@ -722,7 +722,7 @@ function createCenterPanel(container) {
   [
     { key: 'up',   label: 'UPTIME', cls: 's-ok',   val: '4h' },
     { key: 'cron', label: 'CRON',   cls: 's-info', val: '3' },
-    { key: 'hb',   label: 'HB',     cls: 's-ok',   val: '\u2713' },
+    { key: 'hb',   label: 'HB',     cls: 's-ok',   val: '\u2764' },
     { key: 'err',  label: 'ERR',    cls: 's-err',  val: '0' }
   ].forEach(s => {
     const item = document.createElement('div');
@@ -737,6 +737,9 @@ function createCenterPanel(container) {
     item.appendChild(lbl);
     sysGrid.appendChild(item);
     statusEls[s.key] = ring;
+    if (s.key === 'hb') {
+      ring.style.fontSize = '1.85em';
+    }
   });
   panel.appendChild(sysGrid);
 

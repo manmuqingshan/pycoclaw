@@ -1,0 +1,189 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Install PycoClaw — Redirecting to Scripto Studio" description="Install the PFC AI agent extension on your ESP32 device via Scripto Studio." canonicalUrl="https://pycoclaw.com/install">
+  <div class="stars"></div>
+  <div class="nebula"></div>
+
+  <main class="install-container">
+    <div class="install-card">
+      <div class="install-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 4m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+          <path d="M12 2v2" />
+          <path d="M9 12v9" />
+          <path d="M15 12v9" />
+          <path d="M5 16l4 -2" />
+          <path d="M15 14l4 2" />
+          <path d="M9 18h6" />
+          <path d="M10 8v.01" />
+          <path d="M14 8v.01" />
+        </svg>
+      </div>
+
+      <h1 class="install-title">Installing PFC</h1>
+      <p class="install-subtitle">Opening Scripto Studio…</p>
+
+      <div class="install-spinner" aria-hidden="true">
+        <div class="spinner-ring"></div>
+      </div>
+
+      <p class="install-note">
+        You'll be redirected to <strong>Scripto Studio</strong> to flash firmware and install the PFC AI agent extension on your ESP32 device.
+      </p>
+
+      <a href="https://scriptostudio.com/app/?extension=pfc" class="install-btn" id="install-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+        Open Scripto Studio
+      </a>
+
+      <p class="install-fallback">
+        Not redirecting? <a href="https://scriptostudio.com/app/?extension=pfc">Click here</a>.
+      </p>
+    </div>
+  </main>
+</Layout>
+
+<script is:inline>
+  // Redirect immediately — the install splash is now inside Scripto Studio
+  window.location.href = 'https://scriptostudio.com/app/?extension=pfc';
+</script>
+
+<style>
+  .install-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  .install-card {
+    text-align: center;
+    max-width: 440px;
+    width: 100%;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 48px 32px;
+    backdrop-filter: blur(16px);
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .install-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .install-icon svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 16px var(--logo-glow));
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .install-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--hero-title-start), var(--hero-title-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+  }
+
+  .install-subtitle {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--accent-bright);
+    margin-bottom: 28px;
+  }
+
+  .install-spinner {
+    margin: 0 auto 28px;
+    width: 40px;
+    height: 40px;
+    position: relative;
+  }
+
+  .spinner-ring {
+    width: 100%;
+    height: 100%;
+    border: 3px solid var(--border-subtle);
+    border-top-color: var(--accent-bright);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .install-note {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .install-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    background: var(--accent-bright);
+    color: var(--bg-deep);
+    box-shadow: 0 4px 20px var(--shadow-accent-mid);
+    transition: all 0.2s ease;
+  }
+
+  .install-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px var(--shadow-accent-strong);
+  }
+
+  .install-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .install-fallback {
+    margin-top: 16px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .install-fallback a {
+    color: var(--accent-bright);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .install-fallback a:hover {
+    border-bottom-color: var(--accent-bright);
+  }
+</style>
