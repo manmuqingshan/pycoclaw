@@ -5,6 +5,9 @@
 [![Website](https://img.shields.io/badge/pycoclaw.com-live-brightgreen)](https://pycoclaw.com)
 [![Install](https://img.shields.io/badge/Install-Now-blue)](https://pycoclaw.com/install)
 
+
+![App Screenshot](images/pycoclaw-screenshot.png)
+
 ## What is PycoClaw?
 
 PycoClaw is an open-source platform for running AI agents on ESP32 microcontrollers. It brings [OpenClaw](https://github.com/openclaw/openclaw)-compatible intelligence to embedded devices costing under $5.
