@@ -56,7 +56,7 @@ Built on MicroPython, it supports:
 ## Related Projects
 
 - [ScriptoHub](https://scriptohub.ai) — Skills & Extension marketplace
-- [Scripto Studio](https://scriptostudio.com) — Web-based IDE + Device Manager
+- [Scripto Studio](https://scriptostudio.com) — PWA IDE + Device Manager
 - [WebREPL](https://github.com/jetpax/webrepl) — Protocol specifications
 - [USRobotIQ](https://usrobotiq.com) — Consumer products
 
