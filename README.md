@@ -25,7 +25,7 @@ Built on MicroPython, it supports:
 
 ## Quick Start
 
-1. **Get hardware** — any ESP32-S3 board with 16MB flash + PSRAM (~$5)
+1. **Get hardware** — any ESP32-S3 board with at least 8MB flash + PSRAM (~$5)
 2. **Install firmware** — visit [pycoclaw.com/install](https://pycoclaw.com/install)
 3. **Open Studio** — manage your device at [scriptostudio.com](https://scriptostudio.com)
 
