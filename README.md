@@ -19,7 +19,7 @@ The agent core is **[PFC](https://github.com/jetpax/PFC)** — a MicroPython run
 - 🧠 **Hybrid memory** — TF-IDF keyword search *fused* with vector embeddings, on-device
 - 💬 **Multi-channel chat** — Telegram, Scripto Studio (Discord in progress)
 - 🔧 **Tool loop** — file I/O, exec, web, sensors, image gen, cron, MCP client, Google Sheets, MQTT
-- 🧩 **Dynamic skills** — Python ScriptOs loaded at runtime from [ScriptoHub](https://scriptohub.com)
+- 🧩 **Dynamic skills** — Python ScriptOs loaded at runtime from [ScriptoHub](https://scriptohub.ai)
 - ⏰ **Cron + heartbeats** — proactive scheduled wake-ups via isolated agent turns
 - 🧬 **Subagents** — full spawn/steer/reap lifecycle for delegated tasks
 - 📡 **OTA updates** — via [Scripto Studio](https://scriptostudio.com)
@@ -93,7 +93,7 @@ The MCU-class agent field has three serious entries. (Linux/Docker-hosted agents
 
 - [PFC](https://github.com/jetpax/PFC) — The agent core (MicroPython)
 - [OpenClaw](https://github.com/openclaw/openclaw) — Desktop/server reference implementation
-- [ScriptoHub](https://scriptohub.com) — Skills & extensions marketplace
+- [ScriptoHub](https://scriptohub.ai) — Skills & extensions marketplace
 - [Scripto Studio](https://scriptostudio.com) — PWA IDE and device manager
 - [WebREPL](https://github.com/jetpax/webrepl) — Protocol specifications
 - [USRobotIQ](https://usrobotiq.com) — Robot, code thyself!
